@@ -1,0 +1,712 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>弥生人診断テスト | やよたび</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    /* メニューに戻るボタン */
+    .menu-back-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 24px;
+      color: #4b433f;
+      text-decoration: none;
+      font-size: 13px;
+      border: 1px solid #4b433f;
+      border-radius: 30px;  
+      display: block;
+      width: fit-content;
+    }
+
+    /* 結果画面のグネグネ模様 */
+    .result-screen {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    }
+
+    .result-screen::before,
+   .result-screen::after {
+      content: "";
+      position: absolute;
+     width: 330px;
+     height: 330px;
+     border: 38px solid rgba(255, 255, 255, 0.17);
+     border-radius: 42% 58% 65% 35%;
+      pointer-events: none;
+     z-index: -1;
+}
+
+/* 左上のグネグネ */
+.result-screen::before {
+  top: -155px;
+  left: -140px;
+  transform: rotate(25deg);
+}
+
+/* 右下のグネグネ */
+.result-screen::after {
+  top: 65vh;
+  right: -210px;
+  transform: rotate(-35deg);
+}
+
+
+    html, body {
+     margin: 0;
+     min-height: 100%;
+     font-family: "Kiwi Maru", "Hiragino Kaku Gothic ProN", sans-serif;
+     color: #71665f;
+    }
+
+    body {
+      background: #f7f7f7;
+    }
+
+    button, a {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 500px;
+      min-height: 100svh;
+      margin: 0 auto;
+      background: white;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* スタート画面 */
+
+    .start-screen {
+      min-height: 100svh;
+      padding: 16vh 8% 7vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .start-screen h1 {
+      margin: 0;
+      font-size: 27px;
+      font-weight: 500;
+    }
+
+    .english-title {
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .intro-card {
+      width: 100%;
+      margin-top: 10vh;
+      background: #f4f4f4;
+      border-radius: 17px;
+      overflow: hidden;
+      box-shadow: 0 3px 3px #0002;
+    }
+
+    .intro-item {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 22px 20px;
+      text-align: left;
+    }
+
+    .intro-item + .intro-item {
+      border-top: 1px solid #ddd;
+    }
+
+    .intro-icon {
+      font-size: 31px;
+      color: #c5b0a3;
+      flex-shrink: 0;
+    }
+
+    .intro-item p {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .start-button {
+      width: 100%;
+      margin-top: auto;
+      padding: 16px;
+      border: none;
+      border-radius: 40px;
+      background: #c5b0a3;
+      color: white;
+      font-weight: bold;
+      font-size: 17px;
+    }
+
+    .notice {
+      margin-top: 35px;
+      font-size: 9px;
+      color: #aaa;
+    }
+
+    /* 質問画面 */
+
+    .question-screen {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .question-header {
+      height: 54svh;
+      min-height: 320px;
+      padding: 11vh 8% 35px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .question-text {
+      text-align: center;
+      font-size: 18px;
+      line-height: 2;
+      margin: auto 0;
+    }
+
+    .question-number {
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    .question-number small {
+      font-size: 11px;
+      font-weight: normal;
+    }
+
+    .progress-track {
+      height: 10px;
+      background: #f3f3f3;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 20%;
+      background: #c5b0a3;
+      border-radius: 20px;
+      transition: width 0.3s;
+    }
+
+    .choices {
+      flex: 1;
+      background: #f5f5f5;
+      padding-top: 15px;
+    }
+
+    .choice-button {
+      display: block;
+      width: 100%;
+      min-height: 67px;
+      padding: 18px 10%;
+      border: none;
+      border-bottom: 2px solid #e1e1e1;
+      background: transparent;
+      color: #71665f;
+      text-align: left;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .choice-button:active {
+      background: #e8ddd6;
+    }
+
+    /* 診断結果への切り替え */
+
+    .loading-screen {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+    }
+
+    .loading-mark {
+      width: 220px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #c5b0a3;
+      border-radius: 42%;
+      color: white;
+      font-size: 25px;
+      font-weight: bold;
+      animation: pulse 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(0.95); }
+      to { transform: scale(1.05); }
+    }
+
+    /* 結果画面 */
+
+    .result-screen {
+      --result-bg: #d6bce0;
+      --result-color: #673d76;
+      min-height: 100svh;
+      background: var(--result-bg);
+      color: var(--result-color);
+    }
+
+    .result-hero {
+     padding: 8vh 4% 0;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     text-align: center;
+    }
+    .result-label {
+      font-size: 16px;
+      margin: 0 0 16px;
+    }
+
+    .result-subtitle {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 0 0 18px;
+    }
+
+    .result-title {
+      font-size: 35px;
+      margin: 0;
+    }
+
+    .character-wrap {
+     width: 100%;
+     min-height: 0;
+     margin: 35px 0 30px;
+     display: flex;
+      align-items: center;
+     justify-content: center;
+    }
+
+    .result-character {
+      display: block;
+      width: 100%;
+      max-width: 450px;
+      max-height: none;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .scroll-hint {
+      width: 100%;
+      background: white;
+      border-radius: 18px 18px 0 0;
+      padding: 24px 10px;
+      font-size: 21px;
+      font-weight: bold;
+      letter-spacing: 0.25em;
+    }
+
+    .result-details {
+      padding: 0 4% 25px;
+    }
+
+    .result-card {
+      min-height: 330px;
+      background: white;
+      border-radius: 0 0 18px 18px;
+      padding: 25px 10% 35px;
+    }
+
+    .result-card h2 {
+      margin: 0 0 40px;
+      font-size: 21px;
+      letter-spacing: 0.2em;
+    }
+
+    .result-description {
+      color: #71665f;
+      font-size: 14px;
+      line-height: 1.8;
+      white-space: pre-line;
+    }
+
+    .recommend-button {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 17px 10px;
+      border-radius: 40px;
+      background: var(--result-color);
+      color: white;
+      text-decoration: none;
+      text-align: center;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .retry-button {
+      display: block;
+      margin: 25px auto 0;
+      padding: 10px;
+      border: none;
+      background: transparent;
+      color: var(--result-color);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 380px) {
+      .result-subtitle {
+        font-size: 17px;
+      }
+
+      .result-title {
+        font-size: 31px;
+      }
+
+      .result-card h2 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+
+    <!-- スタート画面 -->
+    <section id="start-screen" class="start-screen">
+      <h1>弥生人診断テスト</h1>
+      <div class="english-title">YAYOI Personality Explorer</div>
+
+      <div class="intro-card">
+        <div class="intro-item">
+          <span class="intro-icon">✎</span>
+          <p>
+            あなたの考え方や価値観から、
+            もし弥生時代に生きていたらどんな役割を
+            担っていたのかを診断します。
+          </p>
+        </div>
+
+        <div class="intro-item">
+          <span class="intro-icon">⚑</span>
+          <p>
+            診断結果をもとに、あなたにおすすめの
+            ルートをご案内します。弥生時代の魅力を
+            あなたのタイプに合わせて楽しんでみましょう。
+          </p>
+        </div>
+      </div>
+
+      <button class="start-button" onclick="startDiagnosis()">
+        診断スタート
+      </button>
+
+      <p class="notice">
+        ※診断結果は歴史的背景を元にしたエンターテインメントコンテンツです。
+      </p>
+
+      <a href="menu.html" class="menu-back-button">
+        メニューに戻る
+      </a>
+
+    </section>
+
+    <!-- 質問画面 -->
+    <section id="question-screen" class="question-screen hidden">
+      <div class="question-header">
+        <h2 id="question-text" class="question-text"></h2>
+
+        <div>
+          <div class="question-number">
+            <span id="question-count">1</span><small> / 5問</small>
+          </div>
+
+          <div class="progress-track">
+            <div id="progress-fill" class="progress-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="choices" class="choices"></div>
+    </section>
+
+    <!-- 診断中画面 -->
+    <section id="loading-screen" class="loading-screen hidden">
+      <div class="loading-mark">診断中...</div>
+    </section>
+
+    <!-- 結果画面 -->
+    <section id="result-screen" class="result-screen hidden">
+      <div class="result-hero">
+        <p class="result-label">あなたの性格タイプ:</p>
+        <p id="result-subtitle" class="result-subtitle"></p>
+        <h1 id="result-title" class="result-title"></h1>
+
+        <div class="character-wrap">
+          <img
+            id="result-character"
+            class="result-character"
+            src=""
+            alt="診断結果のキャラクター"
+          >
+        </div>
+
+        <div class="scroll-hint">あなたの性格は...</div>
+      </div>
+
+      <div class="result-details">
+        <div class="result-card">
+          <p id="result-description" class="result-description"></p>
+        </div>
+
+        <a id="route-link" class="recommend-button" href="map.html">
+          あなたにおすすめの遺跡
+        </a>
+
+        <button class="retry-button" onclick="restartDiagnosis()">
+          もう一度診断する
+        </button>
+
+        <a href="menu.html" class="menu-back-button">
+          メニューに戻る
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // 診断の質問と配点
+    // 配点の順番：首長、司祭者、土器職人、農民
+
+    const questions = [
+      {
+        text: "一つのテーマを話し合って発表する時、あなたはどうする？",
+        choices: [
+          { text: "A. 話し合ったことを最後にみんなの前で発表する", scores: [10, 8, 1, 1] },
+          { text: "B. 話し合いを進めたり、みんなに声をかけたりする", scores: [10, 4, 5, 3] },
+          { text: "C. メモを取ったり、時間を見たりして話し合いを支える", scores: [2, 3, 8, 2] },
+          { text: "D. 特に役割は決めず、自分の意見を伝えながら話し合いに参加する", scores: [8, 5, 2, 5] },
+          { text: "E. あまり発言せず、一人で考える", scores: [1, 7, 4, 10] }
+        ]
+      },
+      {
+        text: "友達同士が喧嘩している時、どう対応する？",
+        choices: [
+          { text: "A. 2人で話し合わせて解決策を探す", scores: [10, 5, 5, 3] },
+          { text: "B. 1人1人の話を個別に聞き、仲直りできるように導く", scores: [5, 10, 5, 4] },
+          { text: "C. 話題を避けつつ、2人の仲が悪くならないよう動く", scores: [5, 10, 5, 8] },
+          { text: "D. 友人同士に解決させ、余計なことはしない", scores: [5, 1, 7, 10] }
+        ]
+      },
+      {
+        text: "どんな生活が理想？",
+        choices: [
+          { text: "A. 新しいことに挑戦できる生活", scores: [10, 1, 6, 3] },
+          { text: "B. 人とのつながりを大切にする生活", scores: [4, 3, 6, 10] },
+          { text: "C. 1人で趣味に没頭できる生活", scores: [1, 10, 6, 3] },
+          { text: "D. 穏やかで安定している生活", scores: [1, 9, 10, 7] }
+        ]
+      },
+      {
+        text: "どんなときにやる気が出る？",
+        choices: [
+          { text: "A. 周りを引っ張る役目を任されたとき", scores: [10, 3, 4, 2] },
+          { text: "B. 誰かの役に立てたとき", scores: [8, 10, 3, 2] },
+          { text: "C. 自分の技術が上達したとき", scores: [2, 2, 10, 8] },
+          { text: "D. 努力が結果につながったとき", scores: [2, 5, 8, 10] },
+          { text: "E. 特にやる気が出ることはない", scores: [0, 0, 0, 0] }
+        ]
+      },
+      {
+        text: "自分にいちばんある力は？",
+        choices: [
+          { text: "A. 人をまとめる力", scores: [10, 7, 3, 2] },
+          { text: "B. コミュニケーション力", scores: [8, 10, 5, 5] },
+          { text: "C. 専門的な技術力", scores: [2, 5, 8, 10] },
+          { text: "D. 物事に対する継続力", scores: [2, 8, 10, 10] },
+          { text: "E. 特にない", scores: [0, 0, 0, 0] }
+        ]
+      }
+    ];
+
+    // キャラクター画像と結果デザイン
+
+    const resultTypes = [
+      {
+        name: "首長",
+        subtitle: "村を導く、決断のリーダー",
+        image: "images/chief.png",
+        background: "#eea06c",
+        color: "#944008",
+        description:
+          "あなたは、全体を見渡しながら人をまとめることが得意なタイプです。\n\n" +
+          "責任感が強く、「どうすればみんなにとって一番良いか」を考えながら行動できます。\n\n" +
+          "新しいことへの挑戦も苦にならず、困ったときには率先して前に立つことができるため、周囲から頼られる場面も多いでしょう。"
+      },
+      {
+        name: "司祭者",
+        subtitle: "人と人をつなぐ、村の心の支え",
+        image: "images/priest.png",
+        background: "#d5badd",
+        color: "#673d76",
+        description:
+          "あなたは、相手の気持ちを理解し、人とのつながりを大切にするタイプです。\n\n" +
+          "困っている人がいると放っておけず、自然と相談役になることも多いでしょう。\n\n" +
+          "対立を和らげたり、みんなが安心して過ごせる雰囲気をつくったりすることが得意です。"
+      },
+      {
+        name: "土器職人",
+        subtitle: "技術を磨く、ものづくりの達人",
+        image: "images/potter.png",
+        background: "#a8cd94",
+        color: "#536e47",
+        description:
+          "あなたは、一つのことをじっくり極めることが得意なタイプです。\n\n" +
+          "派手に目立つよりも、自分の技術や知識を磨き、より良いものを生み出すことに喜びを感じます。\n\n" +
+          "細かな工夫や改善を積み重ねることで、大きな成果を生み出せる人です。"
+      },
+      {
+        name: "農民",
+        subtitle: "村を支える、縁の下の力持ち",
+        image: "images/farmer.png",
+        background: "#c9958d",
+        color: "#985047",
+        description:
+          "あなたは、毎日の努力を積み重ねられる堅実なタイプです。\n\n" +
+          "派手さはなくても、任されたことを最後までやり遂げる責任感があります。\n\n" +
+          "安定した環境を好み、一歩ずつ着実に成果を積み重ねることができるため、多くの人から信頼される存在です。"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let totalScores = [0, 0, 0, 0];
+    let loadingTimer = null;
+
+    function showScreen(screenId) {
+      ["start-screen", "question-screen", "loading-screen", "result-screen"]
+        .forEach(id => {
+          document.getElementById(id).classList.add("hidden");
+        });
+
+      document.getElementById(screenId).classList.remove("hidden");
+      window.scrollTo(0, 0);
+    }
+
+    function startDiagnosis() {
+      currentQuestion = 0;
+      totalScores = [0, 0, 0, 0];
+      showScreen("question-screen");
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const question = questions[currentQuestion];
+
+      document.getElementById("question-text").textContent = question.text;
+      document.getElementById("question-count").textContent = currentQuestion + 1;
+
+      document.getElementById("progress-fill").style.width =
+        ((currentQuestion + 1) / questions.length * 100) + "%";
+
+      const choicesBox = document.getElementById("choices");
+      choicesBox.innerHTML = "";
+
+      question.choices.forEach(choice => {
+        const button = document.createElement("button");
+        button.className = "choice-button";
+        button.textContent = choice.text;
+        button.addEventListener("click", () => selectChoice(choice));
+        choicesBox.appendChild(button);
+      });
+    }
+
+    function selectChoice(choice) {
+      choice.scores.forEach((score, index) => {
+        totalScores[index] += score;
+      });
+
+      currentQuestion++;
+
+      if (currentQuestion < questions.length) {
+        showQuestion();
+        window.scrollTo(0, 0);
+      } else {
+        showScreen("loading-screen");
+        loadingTimer = setTimeout(showResult, 1300);
+      }
+    }
+
+    function showResult() {
+      let maxIndex = 0;
+
+      for (let i = 1; i < totalScores.length; i++) {
+        if (totalScores[i] > totalScores[maxIndex]) {
+          maxIndex = i;
+        }
+      }
+
+      const result = resultTypes[maxIndex];
+      const screen = document.getElementById("result-screen");
+
+      screen.style.setProperty("--result-bg", result.background);
+      screen.style.setProperty("--result-color", result.color);
+
+      document.getElementById("result-title").textContent = result.name;
+      document.getElementById("result-subtitle").textContent = result.subtitle;
+      document.getElementById("result-description").textContent = result.description;
+
+      const character = document.getElementById("result-character");
+      character.src = result.image;
+      character.alt = result.name + "のキャラクター";
+
+      // おすすめ遺跡のページができるまではマップに移動
+      const routePages = [
+      "route-chief.html",
+      "route-priest.html",
+       "route-potter.html",
+       "route-farmer.html"
+      ];
+
+      document.getElementById("route-link").href =
+        routePages[maxIndex];
+
+      showScreen("result-screen");
+    }
+
+    function restartDiagnosis() {
+      if (loadingTimer !== null) {
+        clearTimeout(loadingTimer);
+        loadingTimer = null;
+      }
+
+      currentQuestion = 0;
+      totalScores = [0, 0, 0, 0];
+
+      showScreen("start-screen");
+    }
+  </script>
+</body>
+</html>

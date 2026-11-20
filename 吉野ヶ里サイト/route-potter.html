@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>土器職人のおすすめルート | やよたび</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Kiwi Maru", sans-serif;
+    }
+
+    body {
+      background: #f7f7f7;
+    }
+
+    .route-page {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      width: 100%;
+      max-width: 500px;
+      min-height: 100svh;
+      margin: 0 auto;
+      padding: 55px 5% 70px;
+      background: #a9ce98;
+      color: #171c12;
+    }
+
+    /* 背景のグネグネ模様 */
+    .route-page::before,
+    .route-page::after {
+      content: "";
+      position: absolute;
+      width: 330px;
+      height: 330px;
+      border: 38px solid rgba(224, 239, 179, 0.52);
+      border-radius: 42% 58% 65% 35%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .route-page::before {
+      top: -155px;
+      left: -140px;
+      transform: rotate(25deg);
+    }
+
+    .route-page::after {
+      bottom: -120px;
+      right: -210px;
+      transform: rotate(-35deg);
+    }
+
+    .page-title {
+      margin: 0 0 32px;
+      text-align: center;
+      color: #44683c;
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    /* 共通 */
+    .spot {
+      margin: 0 0 45px;
+      text-align: center;
+    }
+
+    .spot-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .spot-image {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1.18 / 1;
+      object-fit: cover;
+      border-radius: 30px;
+    }
+
+    .spot-name {
+      margin: 15px 0 4px;
+      font-size: clamp(26px, 7vw, 36px);
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      color: #171c12;
+    }
+
+    .spot-description {
+      margin: 15px 0 0;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    /* 施設①：左に縦書き */
+    .spot-first-layout {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .vertical-name {
+      flex: 0 0 42px;
+      margin: 0;
+      color: #171c12;
+      font-size: 30px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+    }
+
+    .spot-first-layout .spot-link {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .spot-first .spot-image {
+      aspect-ratio: 1 / 1.12;
+    }
+
+    /* マップ */
+    .map-area {
+      margin: 45px auto 55px;
+      text-align: center;
+    }
+
+    .map-title {
+      margin: 0 0 18px;
+      color: #44683c;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .map-image {
+      display: block;
+      width: 100%;
+      max-width: 370px;
+      height: auto;
+      margin: 0 auto;
+      object-fit: contain;
+    }
+
+    .map-note {
+      margin: 12px 0 0;
+      color: #44683c;
+      font-size: 12px;
+    }
+
+    /* 施設② */
+    .spot-second .spot-image {
+      aspect-ratio: 1.18 / 1;
+    }
+
+    /* 戻るボタン */
+    .back-button {
+      display: block;
+      width: fit-content;
+      margin: 60px auto 0;
+      padding: 13px 30px;
+      background: #527c49;
+      color: white;
+      border-radius: 40px;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    @media (max-width: 380px) {
+      .vertical-name {
+        font-size: 25px;
+        flex-basis: 35px;
+      }
+
+      .spot-first-layout {
+        gap: 8px;
+      }
+
+      .spot-description {
+        font-size: 11px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="route-page">
+
+    <h1 class="page-title">土器職人のおすすめルート</h1>
+
+    <!-- ① 中のムラ -->
+    <section class="spot spot-first">
+
+      <div class="spot-first-layout">
+
+        <h2 class="vertical-name">① 中のムラ</h2>
+
+        <a href="naka-mura.html" class="spot-link"
+           aria-label="中のムラの紹介を見る">
+
+          <img
+            src="images/nakanomura.jpg"
+            alt="中のムラの写真"
+            class="spot-image"
+          >
+
+        </a>
+
+      </div>
+
+      <p class="spot-description">
+        ― 祭りに使うものを作った場所 ―
+      </p>
+
+    </section>
+
+    <!-- 土器職人専用マップ -->
+    <section class="map-area">
+
+      <h2 class="map-title">おすすめルートマップ</h2>
+
+      <img
+        src="images/map-potter.png"
+        alt="土器職人のおすすめルートマップ。①中のムラ、②倉と市"
+        class="map-image"
+      >
+
+      <p class="map-note">
+        ①と②の場所をマップで確認してね！
+      </p>
+
+    </section>
+
+    <!-- ② 倉と市 -->
+    <section class="spot spot-second">
+
+      <a href="kura-to-ichi.html" class="spot-link"
+         aria-label="倉と市の紹介を見る">
+
+        <img
+          src="images/kuratoichi.jpg"
+          alt="倉と市の写真"
+          class="spot-image"
+        >
+
+        <h2 class="spot-name">② 倉と市</h2>
+      </a>
+
+      <p class="spot-description">
+        ― 物の保管や商売をした場所 ―
+      </p>
+
+    </section>
+
+    <a href="javascript:history.back()" class="back-button">
+      前のページに戻る
+    </a>
+
+    <a href="menu.html" class="back-button">
+      メニューに戻る
+    </a>
+
+  </main>
+</body>
+</html>

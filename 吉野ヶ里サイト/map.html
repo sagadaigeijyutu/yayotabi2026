@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マップ</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="page map-page">
+
+  <a href="index.html" class="back-link">← トップへ戻る</a>
+
+  <h1 class="map-title">吉野ヶ里遺跡マップ</h1>
+  <p class="map-lead">気になるエリアをタップしてみよう！</p>
+
+  <div class="map-container">
+    <img src="image/map.png" alt="吉野ヶ里遺跡マップ" class="map-image">
+
+   <button class="pin pin1" onclick="openPopup('南内郭','説明')"></button>
+    <button class="pin pin2" onclick="openPopup('北内郭','説明')"></button>
+    <button class="pin pin3" onclick="openPopup('北墳丘墓','説明')"></button>
+    <button class="pin pin4" onclick="openPopup('甕棺墓列','説明')"></button>
+    <button class="pin pin5" onclick="openPopup('中のムラ','説明')"></button>
+    <button class="pin pin6" onclick="openPopup('倉と市','説明')"></button>
+    <button class="pin pin7" onclick="openPopup('南のムラ','説明')"></button>
+  </div>
+
+</div>
+
+<div id="popup" class="popup">
+  <div class="popup-box">
+    <button class="close-button" onclick="closePopup()">×</button>
+    <h2 id="popup-title"></h2>
+    <p id="popup-text"></p>
+  </div>
+</div>
+
+<script>
+function openPopup(title, text) {
+  document.getElementById("popup-title").textContent = title;
+  document.getElementById("popup-text").textContent = text;
+  document.getElementById("popup").classList.add("show");
+}
+
+function closePopup() {
+  document.getElementById("popup").classList.remove("show");
+}
+</script>
+
+</body>
+</html>

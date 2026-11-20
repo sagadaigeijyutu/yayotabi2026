@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>吉野ヶ里遺跡をめぐる | やよたび</title>
+
+  <link
+  href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;200&display=swap"
+  rel="stylesheet"
+>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Kiwi Maru", sans-serif;
+    }
+
+    body {
+      background: #f5f5f5;
+      color: #594e47;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 500px;
+      min-height: 100svh;
+      margin: 0 auto;
+      background: white;
+      overflow: hidden;
+    }
+
+    /* 導入画像と白い縦書き文字 */
+    .intro {
+      position: relative;
+      width: 100%;
+    }
+
+    .intro-image {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .intro-text {
+        position: absolute;
+        color: white;
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        font-family: "Noto Sans JP", sans-serif;
+        font-weight: 100;
+        font-size: clamp(20px, 5.5vw, 28px);
+        line-height: 1.5;
+        letter-spacing: 0.12em;
+        white-space: nowrap;
+        pointer-events: none;
+    }
+
+    /* 右側の文字 */
+    .intro-text-right {
+      top: 20%;
+      right: 15%;
+    }
+
+    /* 中央寄りの文字 */
+    .intro-text-center {
+      top: 32%;
+      right: 43%;
+    }
+
+    /* 施設紹介エリア */
+    .spots {
+      padding: 0 6% 65px;
+    }
+
+    .spot {
+      margin: 45px 0 95px;
+    }
+
+    .spot:last-child {
+      margin-bottom: 35px;
+    }
+
+    /* 左右に少しずらす */
+    .spot:nth-child(odd) {
+      margin-right: 9%;
+    }
+
+    .spot:nth-child(even) {
+      margin-left: 9%;
+    }
+
+    .spot-link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .spot-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 35px;
+    }
+
+    .spot-name {
+      margin: 16px 0 5px;
+      text-align: center;
+      font-size: clamp(22px, 6vw, 30px);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+    }
+
+    .spot-description {
+      margin: 0;
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    /* メニューへ戻る */
+    .back-button {
+      display: block;
+      width: fit-content;
+      margin: 0 auto 65px;
+      padding: 14px 32px;
+      background: #a58d7d;
+      color: white;
+      text-decoration: none;
+      border-radius: 40px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    @media (max-width: 375px) {
+      .spots {
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+
+      .spot {
+        margin-bottom: 75px;
+      }
+
+      .spot-name {
+        font-size: 23px;
+      }
+
+      .spot-description {
+        font-size: 11px;
+      }
+    }
+
+    /* ほかの施設への横スクロール */
+    .related-spots {
+      display: none;
+      margin-top: 40px;
+      padding-top: 25px;
+      border-top: 1px solid #e8ded8;
+    }
+
+    .related-title {
+      margin: 0 0 8px;
+      text-align: center;
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    .related-hint {
+      margin: 0 0 22px;
+      text-align: center;
+      font-size: 12px;
+      color: #9a8b83;
+    }
+
+    .related-scroll {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding: 0 0 16px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .related-item {
+      flex: 0 0 calc((100% - 30px) / 3);
+      min-width: 0;
+      color: inherit;
+      text-align: center;
+      text-decoration: none;
+      scroll-snap-align: start;
+    }
+
+    .related-item img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #f0e6df;
+    }
+
+    .related-item span {
+      display: block;
+      margin-top: 9px;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+  </style>
+
+  <!-- 細い明朝体 -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300&display=swap"
+    rel="stylesheet"
+  >
+</head>
+
+<body>
+  <main class="page">
+
+    <!-- 背景・白い縦書き文字 -->
+    <div class="intro">
+
+      <img
+        src="images/背景.png"
+        alt="吉野ヶ里遺跡の青空と草原"
+        class="intro-image"
+      >
+
+      <div class="intro-text intro-text-right">
+        弥生人の声が
+      </div>
+
+      <div class="intro-text intro-text-center">
+        聞こえる。
+      </div>
+
+    </div>
+
+    <div class="spots">
+
+      <!-- ① 北内郭 -->
+      <section class="spot">
+        <a href="kita-naikaku.html?from=course" class="spot-link">
+          <img
+            src="images/kita-naikaku-button.png"
+            alt="北内郭の紹介を見る"
+            class="spot-image"
+          >
+          <h2 class="spot-name">北内郭</h2>
+          <p class="spot-description">
+            ― 政治や宗教の中心となった場所 ―
+          </p>
+        </a>
+      </section>
+
+      <!-- ② 北墳丘墓 -->
+      <section class="spot">
+        <a href="kita-funkyubo.html?from=course" class="spot-link">
+          <img
+            src="images/kita-funkyubo-button.png"
+            alt="北墳丘墓の紹介を見る"
+            class="spot-image"
+          >
+          <h2 class="spot-name">北墳丘墓</h2>
+          <p class="spot-description">
+            ― これまでの王たちが眠る場所 ―
+          </p>
+        </a>
+      </section>
+
+      <!-- ③ 南内郭 -->
+      <section class="spot">
+        <a href="minami-naikaku.html?from=course" class="spot-link">
+          <img
+            src="images/minami-naikaku-button.png"
+            alt="南内郭の紹介を見る"
+            class="spot-image"
+          >
+          <h2 class="spot-name">南内郭</h2>
+          <p class="spot-description">
+            ― 支配者たちが暮らした場所 ―
+          </p>
+        </a>
+      </section>
+
+      <!-- ④ 中のムラ -->
+      <section class="spot">
+        <a href="naka-mura.html?from=course" class="spot-link">
+          <img
+            src="images/naka-mura-button.png"
+            alt="中のムラの紹介を見る"
+            class="spot-image"
+          >
+          <h2 class="spot-name">中のムラ</h2>
+          <p class="spot-description">
+            ― 祭りに使うものを作った場所 ―
+          </p>
+        </a>
+      </section>
+
+      <!-- ⑤ 甕棺墓列 -->
+      <section class="spot">
+        <a href="kamekan-boretsu.html?from=course" class="spot-link">
+          <img
+            src="images/kamekan-boretsu-button.png"
+            alt="甕棺墓列の紹介を見る"
+            class="spot-image"
+          >
+          <h2 class="spot-name">甕棺墓列</h2>
+          <p class="spot-description">
+            ― 人々のお墓が並ぶ場所 ―
+          </p>
+        </a>
+      </section>
+
+      <!-- ⑥ 倉と市 -->
+      <section class="spot">
+        <a href="kura-to-ichi.html?from=course" class="spot-link">
+          <img
+            src="images/kura-to-ichi-button.png"
+            alt="倉と市の紹介を見る"
+            class="spot-image"
+          >
+          <h2 class="spot-name">倉と市</h2>
+          <p class="spot-description">
+            ― 物の保管や商売をした場所 ―
+          </p>
+        </a>
+      </section>
+
+      <!-- ⑦ 南のムラ -->
+      <section class="spot">
+        <a href="minami-mura.html?from=course" class="spot-link">
+          <img
+            src="images/minami-mura-button.png"
+            alt="南のムラの紹介を見る"
+            class="spot-image"
+          >
+          <h2 class="spot-name">南のムラ</h2>
+          <p class="spot-description">
+            ― ふつうの人々が暮らした場所 ―
+          </p>
+        </a>
+      </section>
+
+    </div>
+
+    <a href="menu.html" class="back-button">
+      メニューに戻る
+    </a>
+
+  </main>
+</body>
+</html>

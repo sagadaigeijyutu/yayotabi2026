@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>倉と市 | やよたび</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Kiwi Maru", sans-serif;
+      color: #71665f;
+    }
+
+    body {
+      background: #f7f7f7;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 500px;
+      min-height: 100svh;
+      margin: 0 auto;
+      background: white;
+      overflow: hidden;
+    }
+
+    /* 写真と白い波 */
+    .hero-wrap {
+      position: relative;
+      overflow: hidden;
+      height: 40svh;
+      min-height: 240px;
+      max-height: 360px;
+    }
+
+    .hero-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 65%;
+    }
+
+    .hero-wrap::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 34px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 40' preserveAspectRatio='none'%3E%3Cpath d='M0 14 C55 14 60 40 120 34 S190 4 250 14 S315 40 370 30 S455 4 510 14 S565 35 600 24 L600 40 L0 40 Z' fill='white'/%3E%3C/svg%3E") center bottom / 100% 100% no-repeat;
+      pointer-events: none;
+    }
+
+    /* タイトルと説明 */
+    .content {
+      padding: 32px 7% 45px;
+    }
+
+    .spot-title {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+    }
+
+    .spot-subtitle {
+      margin: 8px 0 28px;
+      font-size: 13px;
+    }
+
+    .description {
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .description p {
+      margin: 0 0 20px;
+    }
+
+    /* 丸い写真の横スクロール */
+    .related-spots {
+      display: none;
+      margin-top: 45px;
+      padding-top: 30px;
+      border-top: 1px solid #e8ded8;
+    }
+
+    .course-mode .related-spots {
+      display: block;
+    }
+
+    .related-title {
+      margin: 0 0 8px;
+      font-size: 17px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .related-hint {
+      margin: 0 0 25px;
+      font-size: 12px;
+      color: #a49a92;
+      text-align: center;
+    }
+
+    .related-scroll {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      overflow-x: auto;
+      padding: 0 0 18px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+
+    .related-item {
+      display: block;
+      flex: 0 0 calc((100% - 24px) / 3);
+      min-width: 0;
+      text-align: center;
+      text-decoration: none;
+      color: #71665f;
+      scroll-snap-align: start;
+    }
+
+    .related-item img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #f0e6df;
+    }
+
+    .related-item span {
+      display: block;
+      margin-top: 10px;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    /* 戻るボタン */
+    .back-button {
+      display: block;
+      width: 100%;
+      margin-top: 35px;
+      padding: 15px;
+      border-radius: 40px;
+      background: #739b75;
+      color: white;
+      text-decoration: none;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* 入口によって戻るボタンを切り替え */
+    .course-mode .route-back {
+      display: none;
+    }
+
+    .course-back {
+      display: none;
+    }
+
+    .course-mode .course-back {
+      display: block;
+    }
+  </style>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.get("from") === "course") {
+      document.documentElement.classList.add("course-mode");
+    }
+  </script>
+</head>
+
+<body>
+  <main class="page">
+
+    <!-- 倉と市の写真 -->
+    <div class="hero-wrap">
+      <img
+        src="images/kuratoichi.jpg"
+        alt="倉と市の写真"
+        class="hero-image"
+      >
+    </div>
+
+    <div class="content">
+
+      <h1 class="spot-title">倉と市</h1>
+
+      <p class="spot-subtitle">
+        ― 物の保管や商売をした場所 ―
+      </p>
+
+      <div class="description">
+
+        <p>
+          倉と市は、吉野ヶ里で物資の保管や
+          交易が行われていたと考えられる場所です。
+          ここには、収穫した食料やさまざまな品物を
+          保管するための倉庫が建てられていました。
+        </p>
+
+        <p>
+          また、人々が集まって物を交換する
+          「市（いち）」も開かれていたと考えられています。
+          吉野ヶ里の人々は、周辺の集落や遠くの地域とも
+          交流しながら、必要な物を手に入れていたのでしょう。
+        </p>
+
+        <p>
+          この場所の周囲には環濠がめぐり、
+          物資の運搬に関わる水路もあったと考えられています。
+          また、市を管理する「市長（いちおさ）」の
+          存在も想定されています。
+          倉と市は、吉野ヶ里が多くの人や物の集まる
+          拠点だったことを感じられる場所です。
+        </p>
+
+      </div>
+
+      <!-- 遺跡紹介から来たときだけ表示 -->
+      <section class="related-spots">
+
+        <h2 class="related-title">
+          ほかの遺跡ものぞいてみよう
+        </h2>
+
+        <p class="related-hint">
+          ← 横にスワイプして探してね →
+        </p>
+
+        <div class="related-scroll">
+
+          <a href="kita-naikaku.html?from=course" class="related-item">
+            <img src="images/kita-naikaku.jpg" alt="北内郭">
+            <span>北内郭</span>
+          </a>
+
+          <a href="kita-funkyubo.html?from=course" class="related-item">
+            <img src="images/kita-funkyubo.jpg" alt="北墳丘墓">
+            <span>北墳丘墓</span>
+          </a>
+
+          <a href="minami-naikaku.html?from=course" class="related-item">
+            <img src="images/minami-naikaku.jpg" alt="南内郭">
+            <span>南内郭</span>
+          </a>
+
+          <a href="naka-mura.html?from=course" class="related-item">
+            <img src="images/nakanomura.jpg" alt="中のムラ">
+            <span>中のムラ</span>
+          </a>
+
+          <a href="kamekan-boretsu.html?from=course" class="related-item">
+            <img src="images/kame-boretsu.jpg" alt="甕棺墓列">
+            <span>甕棺墓列</span>
+          </a>
+
+          <a href="minami-mura.html?from=course" class="related-item">
+            <img src="images/minaminomura.jpg" alt="南のムラ">
+            <span>南のムラ</span>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- おすすめルートから来た場合 -->
+      <a href="route-potter.html" class="back-button route-back">
+        おすすめルートに戻る
+      </a>
+
+      <!-- 遺跡紹介から来た場合 -->
+      <a href="course.html" class="back-button course-back">
+        遺跡紹介に戻る
+      </a>
+
+    </div>
+  </main>
+</body>
+</html>

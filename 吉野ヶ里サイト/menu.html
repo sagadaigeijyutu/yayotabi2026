@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>やよたび | メニュー</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-color: #71665f;
+      font-family: sans-serif;
+    }
+
+    .menu-page {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .background {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .menu-links {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+        
+    .menu-button {
+     position: absolute;
+      left: 12%;
+     width: 76%;
+     height: 8%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     flex-direction: column;
+     background-color: #c5b0a3;
+     color: white;
+     text-decoration: none;
+      border-radius: 45px;
+     text-align: center;
+     cursor: pointer;
+    }
+
+    .menu-button strong {
+  font-size: 26px;
+    }
+
+    .menu-button small {
+  font-size: 16px;
+    }
+
+
+    .diagnosis {
+      top: 58%;
+    }
+
+    .map {
+      top: 70%;
+    }
+
+    .about {
+      top: 82%;
+    }
+
+    .menu-button:focus-visible {
+      outline: 3px solid white;
+      outline-offset: 3px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="menu-page">
+
+    <img
+      src="images/home-bg.png"
+      alt="ようこそ、吉野ヶ里遺跡へ"
+      class="background"
+    >
+
+    
+<nav class="menu-links" aria-label="メインメニュー">
+
+  <a href="diagnosis.html" class="menu-button diagnosis">
+    <strong>弥生人診断</strong>
+    <small>Explorer</small>
+  </a>
+
+  <a href="map.html" class="menu-button map">
+    <strong>マップ</strong>
+    <small>Map</small>
+  </a>
+
+  <a href="course.html" class="menu-button about">
+    <strong>吉野ヶ里遺跡</strong>
+    <small>About us</small>
+  </a>
+
+</nav>
+
+  </main>
+
+</body>
+</html>
